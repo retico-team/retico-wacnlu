@@ -109,6 +109,6 @@ class WordsAsClassifiersModule(retico_core.AbstractModule):
             self.append(output_iu)
             
 
-    def setup(self):
+    def prepare_run(self):
         if not self.train_mode:
             self.wac.load_model()

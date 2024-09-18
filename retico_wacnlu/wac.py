@@ -129,7 +129,7 @@ class WAC:
     
     def load_model(self):
         self.trained_wac = {}
-        existing = [f.split('.')[0] for f in os.listdir(self.model_name)]
+        existing = [f[:-4] for f in os.listdir(self.model_name)]
         print('loading WAC model')
         for item in tqdm(existing):
             with open('{}/{}.pkl'.format(self.model_name, item), 'rb') as handle:
