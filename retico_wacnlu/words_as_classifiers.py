@@ -36,7 +36,7 @@ class WordsAsClassifiersModule(retico_core.AbstractModule):
     def output_iu():
         return GroundedFrameIU
 
-    def __init__(self, wac_dir, **kwargs):
+    def __init__(self, wac_dir, train_mode=False, **kwargs):
         """Loads the WAC models.
 
         Args:
@@ -46,7 +46,7 @@ class WordsAsClassifiersModule(retico_core.AbstractModule):
         self.wac = WAC(wac_dir)
         self.word_buffer = None
         self.itts = 0
-        self.train_mode = False
+        self.train_mode = train_mode
         self.queue = deque(maxlen=1)
 
     def train_wac(self):
@@ -60,6 +60,7 @@ class WordsAsClassifiersModule(retico_core.AbstractModule):
 
 
     def process_update(self, update_message):
+        # print("WAC process update")
         for iu, ut in update_message:
             if ut != retico_core.UpdateType.ADD:
                 continue
