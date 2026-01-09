@@ -99,13 +99,16 @@ class WAC:
             else:
                 self.wac[word] = copy.deepcopy(self.positives[word])
 
+        words = list(self.wac.keys())
         for word in self.wac:
             negs = []
             max_len = len(self.wac[word]) * num_negs
+            random.shuffle(words)  # Shuffle all possible words so we don't only sample from beginning of dict
             while len(negs) < max_len:
-                for iword in self.wac:
+                for iword in words:
                     if iword == word: continue
-                    i = random.sample(self.wac[iword],1)[0]
+                    # only sample positive feature vectors (observations) from the word
+                    i = random.sample([feature for feature in self.wac[iword] if feature[1] == 1],1)[0]
                     negs.append(i[0])
             for i in negs:
                 self.add_observation(word, i, 0)
